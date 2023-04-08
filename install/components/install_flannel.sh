@@ -12,7 +12,7 @@ do
     --pod-cidr)
       echo "参数pod-cidr的值$2"
       pod_cidr=$2
-      shiftpod
+      shift
       ;;
     -h|--help)
         echo ""
