@@ -38,6 +38,10 @@ echo ">>> set pod cidr: ${pod_cidr}"
 
 echo ">>> set service cidr: ${service_cidr}"
 
+work_dir=/kubeadm
+
+mkdir -p ${work_dir}
+
 echo "
 kind: ClusterConfiguration
 apiVersion: kubeadm.k8s.io/v1beta3
@@ -52,7 +56,7 @@ networking:
 kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1
 cgroupDriver: systemd
-" > kubeadm-conf.yaml
+" > ${work_dir}/kubeadm-conf.yaml
 
 echo '>>> disable swap'
 sudo swapoff -a
@@ -66,7 +70,7 @@ sudo crictl pull registry.aliyuncs.com/google_containers/pause:3.6
 
 sudo ctr -n k8s.io image tag --force registry.aliyuncs.com/google_containers/pause:3.6 registry.k8s.io/pause:3.6
 
-kubeadm init --config kubeadm-conf.yaml -v6
+kubeadm init --config ${work_dir}/kubeadm-conf.yaml -v6
 
 sudo mkdir -p $HOME/.kube
 sudo cp -f /etc/kubernetes/admin.conf $HOME/.kube/config

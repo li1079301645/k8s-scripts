@@ -31,16 +31,8 @@ do
         exit 1
         ;;
   esac
-  shiftponents/install_containerd.sh
+  shift
 done
-
-work_dir=/kubeadm/
-
-mkdir -p ${work_dir}
-
-cd ${work_dir}
-
-echo "workspace `pwd`"
 
 sh ./components/install_containerd.sh
 
